@@ -55,6 +55,12 @@ def sl_policy_net(_X, dropout):
     out = tf.matmul(dense2, w_out) + b_out
     return out
 
+print "---------"
+print "- start -"
+print "---------"
+kgs_input = kgs.KgsInput()
+kgs_input.count_data_files()
+
 pred = sl_policy_net(x, keep_prob)
 
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred, y))
