@@ -14,7 +14,7 @@ class SgfReader:
         self.write_file_count = 0
         self.total_rollout_count = 0
 
-    def printBord(self, board):
+    def print_board(self, board):
         print 'a b c d e f g h i j k l m n o p q r s'
         for row in board:
             for e in row:
@@ -26,29 +26,29 @@ class SgfReader:
                     print 'o',
             print ''
 
-    def insertBoardToArray(self, board2d, stone):
+    def insert_board_to_array(self, board2d, stone):
         self.total_rollout_count += 1
         board1dCopy = np.copy(board2d.flatten())
         self.data_array = np.vstack([self.data_array, board1dCopy])
 
-    def saveBoardIfReadEnough(self):
+    def save_board_if_read_enough(self):
         if self.total_rollout_count % self.MAX_DATA_COUNT_IN_ONE_FILE != 0:
             return
-        self.savePkl()
-        self.flushBuffer()
+        self.save_pkl()
+        self.flush_buffer()
 
-    def savePkl(self):
+    def save_pkl(self):
         self.write_file_count += 1
         filename = self.write_file_prefix + str(self.write_file_count) + self.write_file_extend
         pickle.dump( self.data_array, open( filename, "wb" ) )
         print "* write   : %s " % filename
         print "  rollout : %d " % self.total_rollout_count
 
-    def flushBuffer(self):
+    def flush_buffer(self):
         self.data_array = np.zeros([0,361])
         self.label_array = np.zeros(0)
 
-    def readSgf(self, fullpath):
+    def read_sgf(self, fullpath):
         self.read_file_count += 1
         print 'file%s: %s' % (self.read_file_count , fullpath)
         board = np.zeros((19, 19))
@@ -80,9 +80,9 @@ class SgfReader:
                     board[y][x] = 1;
                 else:
                     board[y][x] = -1;
-                self.insertBoardToArray(board, key)
-                self.saveBoardIfReadEnough()
-                # self.printBord(board)
+                self.insert_board_to_array(board, key)
+                self.save_board_if_read_enough()
+                # self.print_board(board)
         f.close()        
 
 
@@ -92,6 +92,6 @@ if __name__ == "__main__":
         for fname in files:
             if fname.endswith('.sgf'):
                 fullpath = os.path.join(root, fname)
-                reader.readSgf(fullpath)
+                reader.read_sgf(fullpath)
 
-    reader.savePkl()
+    reader.save_pkl()
