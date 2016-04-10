@@ -1,4 +1,5 @@
 import tensorflow as tf
+import dataset.kgs as kgs
 
 # Parameters
 learning_rate = 0.001
@@ -77,4 +78,4 @@ with tf.Session() as sess:
             print "Iter " + str(step*batch_size) + ", Minibatch Loss= " + "{:.6f}".format(loss) + ", Training Accuracy= " + "{:.5f}".format(acc)
         step += 1
     print "Optimization Finished!"
-    print "Testing Accuracy:", sess.run(accuracy, feed_dict={x: kgs.test.images[:256], y: kgs.test.labels[:256], keep_prob: 1.})
+    # print "Testing Accuracy:", sess.run(accuracy, feed_dict={x: kgs.test.images[:256], y: kgs.test.labels[:256], keep_prob: 1.})
