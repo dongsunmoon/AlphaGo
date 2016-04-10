@@ -6,7 +6,7 @@ import cPickle as pickle
 class SgfReader:
     def __init__(self):
         self.write_file_prefix = "./out/data-"
-        self.write_file_extend = ".plk"
+        self.write_file_extend = ".pkl"
         self.data_array = np.zeros([0,361])
         self.label_array = np.zeros(0)
         self.MAX_DATA_COUNT_IN_ONE_FILE = 1000
@@ -39,7 +39,7 @@ class SgfReader:
 
     def save_pkl(self):
         self.write_file_count += 1
-        filename = self.write_file_prefix + str(self.write_file_count) + self.write_file_extend
+        filename = self.write_file_prefix + str(self.write`file_count) + self.write_file_extend
         pickle.dump( self.data_array, open( filename, "wb" ) )
         print "* write   : %s " % filename
         print "  rollout : %d " % self.total_rollout_count
